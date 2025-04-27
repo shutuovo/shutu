@@ -6,40 +6,44 @@
     <title>十封信 - 写给妈妈的信</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Framer Motion -->
-    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- 手写字体 -->
-    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+    <!-- 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+QingKe+HuangYou&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #E31937;
+            --primary-color: #8B7355;
+            --secondary-color: #D4B996;
         }
         body {
-            background-color: #f5f5f5;
-            color: #333;
-            font-family: 'ZCOOL QingKe HuangYou', cursive;
-            background-image: url('https://www.transparenttextures.com/patterns/paper.png');
+            background-color: #F5F0E6;
+            color: #4A4A4A;
+            font-family: 'Noto Serif SC', serif;
+            background-image: url('https://www.transparenttextures.com/patterns/rice-paper.png');
             min-height: 100vh;
             padding: 2rem;
         }
         .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
             padding: 2rem;
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
         }
         .bento-item {
-            background: #f8f4e6;
+            background: #FFF9F0;
             border-radius: 0.5rem;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             position: relative;
             overflow: hidden;
-            border: 1px solid #e0d6b5;
+            border: 1px solid #E8D9C5;
+            transform: rotate(-1deg);
+            transition: transform 0.3s ease;
+        }
+        .bento-item:hover {
+            transform: rotate(0deg);
         }
         .bento-item::before {
             content: '';
@@ -48,7 +52,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url('https://www.transparenttextures.com/patterns/paper.png');
+            background-image: url('https://www.transparenttextures.com/patterns/rice-paper.png');
             opacity: 0.1;
             pointer-events: none;
         }
@@ -59,26 +63,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, transparent 48%, rgba(0,0,0,0.03) 50%, transparent 52%);
+            background: linear-gradient(45deg, transparent 48%, rgba(0,0,0,0.02) 50%, transparent 52%);
             pointer-events: none;
-        }
-        .highlight {
-            color: var(--primary-color);
-        }
-        .gradient-text {
-            background: linear-gradient(45deg, var(--primary-color), rgba(227, 25, 55, 0.5));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease-out;
-        }
-        .scroll-reveal.active {
-            opacity: 1;
-            transform: translateY(0);
         }
         .handwriting {
             font-family: 'Ma Shan Zheng', cursive;
@@ -89,17 +75,24 @@
             top: 1rem;
             right: 1rem;
             font-size: 0.875rem;
-            color: #666;
-            font-family: 'ZCOOL QingKe HuangYou', cursive;
+            color: #8B7355;
+            font-family: 'Noto Serif SC', serif;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
         }
         .letter-content {
             position: relative;
             z-index: 1;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            line-height: 2.5;
+            letter-spacing: 0.2em;
         }
         .letter-text {
-            font-family: 'ZCOOL QingKe HuangYou', cursive;
-            line-height: 1.8;
-            letter-spacing: 1px;
+            font-family: 'Noto Serif SC', serif;
+            line-height: 2.5;
+            letter-spacing: 0.2em;
+            text-align: justify;
         }
         .quote-box {
             background: rgba(255, 255, 255, 0.7);
@@ -108,56 +101,114 @@
             margin: 1rem 0;
             border-radius: 0.5rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-        .envelope {
-            position: relative;
-            background: #f8f4e6;
-            border: 1px solid #e0d6b5;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .envelope::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(to right, transparent, #e0d6b5, transparent);
-        }
-        .envelope::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(to right, transparent, #e0d6b5, transparent);
+            writing-mode: vertical-rl;
+            text-orientation: upright;
         }
         .letter-icon {
-            color: #8b7355;
+            color: #8B7355;
             font-size: 2.5rem;
-            margin-right: 1rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        .title-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        .title-section::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--primary-color), transparent);
+        }
+        .decoration {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        .decoration-1 {
+            top: 0;
+            left: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%238B7355" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>');
+        }
+        .decoration-2 {
+            bottom: 0;
+            right: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%238B7355" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>');
+        }
+        .music-control {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        .music-control:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .music-control i {
+            color: var(--primary-color);
+            font-size: 24px;
+        }
+        .music-control.playing i {
+            animation: rotate 2s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @media (max-width: 768px) {
+            .bento-item {
+                padding: 1.5rem;
+                transform: none;
+            }
+            .letter-content {
+                font-size: 0.9em;
+            }
+            .music-control {
+                bottom: 1rem;
+                right: 1rem;
+                width: 40px;
+                height: 40px;
+            }
+            .music-control i {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="bento-grid">
         <!-- 标题部分 -->
-        <div class="bento-item col-span-12">
-            <h1 class="text-6xl font-bold mb-4 gradient-text handwriting text-center">写给妈妈的十封信</h1>
-            <p class="text-xl text-gray-600 text-center">Ten Letters to Mom</p>
+        <div class="title-section">
+            <h1 class="text-6xl font-bold mb-4 handwriting" style="color: var(--primary-color);">写给妈妈的十封信</h1>
+            <p class="text-xl" style="color: var(--secondary-color);">Ten Letters to Mom</p>
         </div>
 
         <!-- 第一封信 -->
-        <div class="bento-item col-span-6 scroll-reveal">
+        <div class="bento-item">
             <div class="letter-date">2025.3.26</div>
             <div class="letter-content">
-                <h2 class="text-4xl font-bold mb-4 handwriting">第一封信</h2>
-                <p class="text-xl mb-4 handwriting">"在这个城市好像有了依靠"</p>
-                <div class="flex items-center gap-4 mb-6">
+                <h2 class="text-4xl font-bold mb-4 handwriting" style="color: var(--primary-color);">第一封信</h2>
+                <p class="text-xl mb-4 handwriting" style="color: var(--secondary-color);">"在这个城市好像有了依靠"</p>
+                <div class="flex flex-col items-center mb-6">
                     <span class="material-icons letter-icon">work</span>
                     <p class="text-gray-600">入职新工作，遇见温暖的家长</p>
                 </div>
@@ -166,15 +217,16 @@
                     <p class="letter-text mt-4">"虽然工作还在适应期，但每一天都充满期待。我在这里不仅学到了专业知识，更收获了珍贵的友谊。这些经历让我明白，成长不仅仅是工作能力的提升，更是心灵的滋养。"</p>
                 </div>
             </div>
+            <div class="decoration decoration-1"></div>
         </div>
 
         <!-- 第三封信 -->
-        <div class="bento-item col-span-6 scroll-reveal">
+        <div class="bento-item">
             <div class="letter-date">2025.4.14</div>
             <div class="letter-content">
-                <h2 class="text-4xl font-bold mb-4 handwriting">第三封信</h2>
-                <p class="text-xl mb-4 handwriting">"我想你们都能活到一百岁"</p>
-                <div class="flex items-center gap-4 mb-6">
+                <h2 class="text-4xl font-bold mb-4 handwriting" style="color: var(--primary-color);">第三封信</h2>
+                <p class="text-xl mb-4 handwriting" style="color: var(--secondary-color);">"我想你们都能活到一百岁"</p>
+                <div class="flex flex-col items-center mb-6">
                     <span class="material-icons letter-icon">account_balance</span>
                     <p class="text-gray-600">对未来的期许与承诺</p>
                 </div>
@@ -183,15 +235,16 @@
                     <p class="letter-text mt-4">"我希望能时常陪伴在你们身边，一起看遍世间美景。我想在合肥做一个温暖的社区，让你们在退休后能享受群体的乐趣。这些梦想虽然还很遥远，但我会一步步努力实现。"</p>
                 </div>
             </div>
+            <div class="decoration decoration-2"></div>
         </div>
 
         <!-- 第五封信 -->
-        <div class="bento-item col-span-12 scroll-reveal">
+        <div class="bento-item">
             <div class="letter-date">2025.4.15</div>
             <div class="letter-content">
-                <h2 class="text-4xl font-bold mb-4 handwriting">第五封信</h2>
-                <p class="text-xl mb-4 handwriting">"凌晨一点半的思念"</p>
-                <div class="flex items-center gap-4 mb-6">
+                <h2 class="text-4xl font-bold mb-4 handwriting" style="color: var(--primary-color);">第五封信</h2>
+                <p class="text-xl mb-4 handwriting" style="color: var(--secondary-color);">"凌晨一点半的思念"</p>
+                <div class="flex flex-col items-center mb-6">
                     <span class="material-icons letter-icon">nightlight</span>
                     <p class="text-gray-600">深夜的思绪与回忆</p>
                 </div>
@@ -200,12 +253,24 @@
                     <p class="letter-text mt-4">"我每天睡前都会读一些书，看着书中的故事，想象着千年以前的世界。这让我明白，时间虽然会流逝，但美好的回忆会永远留在心里。我希望我们能创造更多这样的回忆，让每一个平凡的日子都充满温暖。"</p>
                 </div>
             </div>
+            <div class="decoration decoration-1"></div>
         </div>
     </div>
 
+    <!-- 音乐控制按钮 -->
+    <div class="music-control" id="musicControl">
+        <i class="material-icons">music_note</i>
+    </div>
+
+    <!-- 背景音乐 -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://music.163.com/song/media/outer/url?id=1330348068.mp3" type="audio/mpeg">
+        <source src="https://music.163.com/song/media/outer/url?id=1330348068.ogg" type="audio/ogg">
+    </audio>
+
     <script>
         // 滚动动画
-        const scrollReveal = document.querySelectorAll('.scroll-reveal');
+        const scrollReveal = document.querySelectorAll('.bento-item');
         
         const revealOnScroll = () => {
             scrollReveal.forEach(element => {
@@ -213,13 +278,55 @@
                 const elementVisible = 150;
                 
                 if (elementTop < window.innerHeight - elementVisible) {
-                    element.classList.add('active');
+                    element.style.opacity = '1';
+                    element.style.transform = 'rotate(0deg)';
                 }
             });
         };
 
         window.addEventListener('scroll', revealOnScroll);
         revealOnScroll(); // 初始检查
+
+        // 音乐控制
+        const musicControl = document.getElementById('musicControl');
+        const bgMusic = document.getElementById('bgMusic');
+        let isPlaying = false;
+
+        // 检查浏览器是否支持自动播放
+        const canAutoplay = () => {
+            try {
+                const testAudio = new Audio();
+                testAudio.volume = 0;
+                const playPromise = testAudio.play();
+                return playPromise.then(() => true).catch(() => false);
+            } catch (e) {
+                return false;
+            }
+        };
+
+        musicControl.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicControl.classList.remove('playing');
+            } else {
+                bgMusic.play().catch(e => console.log('播放失败:', e));
+                musicControl.classList.add('playing');
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // 自动播放音乐（需要用户交互后）
+        document.addEventListener('click', async () => {
+            if (!isPlaying && await canAutoplay()) {
+                try {
+                    await bgMusic.play();
+                    musicControl.classList.add('playing');
+                    isPlaying = true;
+                } catch (e) {
+                    console.log('自动播放失败:', e);
+                }
+            }
+        }, { once: true });
     </script>
 </body>
 </html> 
